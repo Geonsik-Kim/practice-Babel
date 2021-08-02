@@ -1,13 +1,13 @@
 # practice-Babel
 Babel 기본 학습을 위한 저장소<br>
-참고에 있는 영상과 블로그를 따라 진행한것입니다.
+'참고'에 있는 영상과 블로그를 따라서 진행하였습니다.
 
-## 1. 참고
+## 참고
 프론트엔드 개발환경 이해 5강 - 바벨(Babel) 기본 - 김정환<br>
 [영상](https://youtu.be/j8HhZ4RgBxQ)
 [블로그](https://jeonghwan-kim.github.io/series/2019/12/22/frontend-dev-env-babel.html)
 <br><br>
-## 2. 기본 동작
+## 1. 기본 동작
 ### 변환 전 코드
 ```
 // src/app.js:
@@ -25,11 +25,11 @@ const alert = msg => window.alert(msg);
 바벨을 총 3단계로 빌드를 진행한다.<br>
 파싱 -> 변환 -> 출력
 <br><br>
-## 3. 플러그인
+## 2. 플러그인
 babel은 기본적으로 코드를 받아서 코드로 변환한다.
 따라서 바벨은 파싱, 출력만 담당하고 변환은 따로 진행이되는데 이것을 <strong>플러그인</strong>이라고 한다.
 
-### 3.1 커스텀 플러그인
+### 2.1 커스텀 플러그인
 #### 예시
 const 키워드로 선언된 변수를 var 키워드로 변경해준다.
 ```
@@ -58,7 +58,7 @@ npx babel app.js --plugins ./myplugin.js
 var alert = msg => window.alert(msg);
 ```
 
-### 3.2 NPM 패키지 플러그인 사용하기
+### 2.2 NPM 패키지 플러그인 사용하기
 #### 예시
 NPM 패키지로 제공되는 플러그인으로 const, let과 같은 블록 유효 범위를 가지는 변수를 함수 유효범위를 가지는 var로 변환해준다.
 ```
@@ -100,9 +100,9 @@ var alert = function (msg) {
 };
 ```
 <br><br>
-## 4. 프리셋
+## 3. 프리셋
 목적에 맞게 여러 플러그인을 세트로 모아 놓은 것을 <strong>프리셋</strong>이라고 한다.
-### 4.1 커스텀 프리셋
+### 3.1 커스텀 프리셋
 사용한 3개 플러그인을 하나의 프리셋으로 만든다.
 ```
 //my-babel-preset.js:
@@ -124,7 +124,7 @@ module.exports = {
 }
 ```
 
-### 4.2 프리셋 사용하기
+### 3.2 프리셋 사용하기
 bable은 목적에 따라 몇 가지 프리셋을 제공한다.
 * preset-env
 * preset-flow
@@ -145,8 +145,8 @@ module.exports = {
 }
 ```
 
-## 5. env 프리셋 설정과 폴리필
-### 5.1 타겟 브라우저
+## 4. env 프리셋 설정과 폴리필
+### 4.1 타겟 브라우저
 지원해야하는 브라우저 버전을 지정할 수있다.
 ```
 // babel.config.js :
