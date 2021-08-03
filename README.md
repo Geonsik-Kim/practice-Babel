@@ -213,5 +213,57 @@ new Promise();
 ```
 core-js 패키지로부터 프라미스 모듈을 가져오는 임포트 구문이 상단에 추가되었다.
 
+## Webpack으로 통합
+babel-loader를 사용한다.<br><br>
 
+먼저 패키지를 설치한다
+```
+npm install -D babel-loader
+```
 
+웹팩 설정에 로더를 추가한다.
+```
+// webpack.config.js:
+module.exports = {
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader", // 바벨 로더를 추가한다
+      },
+    ],
+  },
+}
+```
+.js 확장자는 bable-loader가 처리한다.<br>
+사용하는 써드파티 라이브러리가 많을수록 babel-loader의 동작이 느려질 수 있기에 node_modules 폴더를 로더가 처리하지 않도록 예외처리 하였다.[(참고)](https://github.com/babel/babel-loader#babel-loader-is-slow)<br><br>
+폴리필을 사용 설정을 했다면 core-js를 설치해야한다. Webpack은 babel-loader가 만든 아해 코드를 만나면 core-js를 찾기 때문이다.
+```
+require("core-js/modules/es6.promise")
+require("core-js/modules/es6.object.to-string")
+```
+버전 2로 패키지를 추가한다.
+```
+npm i core-js@2
+```
+빌드
+```
+npm run build
+```
+./src/app.js의 엔트리 포인트가 바벨 로더에 의해 빌드되고 결과물이 dist/main.js로 옮겨진다.
+
+빌드결과
+```
+var alert = function alert(msg) {
+  return window.alert(msg);
+};
+
+new Promise();
+```
+
+## 5. 정리
+babel의 core는 파싱, 출력만 담당하고 변환은 플러그인이 처리한다.<br>
+여러개의 플러그인을 모아 놓은 세트를 프리셋이라고 하며 ECMAScript2015+를 변환할 때는 preset-env를 사용한다.<br>
+babel이 변환하지못하는 promise와 같은 코드는 폴리필로 불러와서 해결한다.<br>
+babel-loader를 사용하여 Webpack과 함께 하면 자동화되고 단순한 방식으로 프론트엔드 개발환경을 갖출 수 있다.
