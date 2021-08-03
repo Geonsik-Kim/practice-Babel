@@ -165,4 +165,53 @@ module.exports = {
 }
 ```
 
+### 4.2 폴리필
+ES6의 Promise 객체를 사용하는 코드이다.
+```
+// app.js:
+new Promise()
+```
+```
+npx babel app.js
+
+"use strict";
+
+new Promise();
+```
+env 프리셋으로 변환을 시도했지만 Promise는 변환 되지 않았다.<br>
+Babel은 변환가능 한것만 빌드하고 그렇지 못한 것들은 <strong>폴리필</storng>이라고 부르는 코드조각을 추가해서 해결한다.<br><br>
+env 프리셋은 폴리필을 지정할 수 있는 옵션을 제공한다.
+```
+// babel.config.js:
+module.exports = {
+  presets: [
+    [
+      "@babel/preset-env",
+      {
+        useBuiltIns: "usage", // 폴리필 사용 방식 지정
+        corejs: {
+          // 폴리필 버전 지정
+          version: 2,
+        },
+      },
+    ],
+  ],
+}
+```
+useBuiltIns는 어떤 방식으로 폴리필을 사용할지 설정하는 옵션이다. "usage" , "entry", false 세 가지 값을 사용하는데 기본값이 false 이므로 폴리필이 동작하지 않았던 것이다.<br>
+반면 usage나 entry를 설정하면 폴리필 패키지 중 core-js를 모듈로 가져온다(이전에 사용하던 babel/polyfile은 바벨 7.4.0부터 사용하지 않는다).
+<br><br>
+폴리필이 추가된 결과이다.
+```
+npx babel src/app.js
+"use strict";
+
+require("core-js/modules/es6.promise");
+require("core-js/modules/es6.object.to-string");
+
+new Promise();
+```
+core-js 패키지로부터 프라미스 모듈을 가져오는 임포트 구문이 상단에 추가되었다.
+
+
 
