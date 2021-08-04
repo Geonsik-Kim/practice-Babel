@@ -179,7 +179,7 @@ npx babel app.js
 new Promise();
 ```
 env 프리셋으로 변환을 시도했지만 Promise는 변환 되지 않았다.<br>
-Babel은 변환가능 한것만 빌드하고 그렇지 못한 것들은 <strong>폴리필</storng>이라고 부르는 코드조각을 추가해서 해결한다.<br><br>
+Babel은 변환가능 한것만 빌드하고 그렇지 못한 것들은 <strong>폴리필</strong>이라고 부르는 코드조각을 추가해서 해결한다.<br><br>
 env 프리셋은 폴리필을 지정할 수 있는 옵션을 제공한다.
 ```
 // babel.config.js:
